@@ -1,0 +1,28 @@
+此为Android Studio JNI整体流程测试项目
+
+构建步骤：
+1.创建native方法
+2.利用AS中的命令窗口Terminal的javah命令生成native方法的头部文件 javah -jni 包名.类名，执行命令之后再当前目录下会生成.h的文件（注意切换到包名所在目录下再执行）
+3.配置注意事项信息
+4.加载so库
+        static{
+            System.loadLibrary("ndkdemo");
+        }
+
+注意事项：
+    1.gradle.properties添加 android.useDeprecatedNdk=true 一行
+    2.defaultConfig {
+              applicationId "ndktest.cg.com.ndktest"
+              minSdkVersion 15
+              targetSdkVersion 25
+              versionCode 1
+              versionName "1.0"
+              testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+               // 额外配置
+              ndk{
+                  moduleName "ndkdemo" // 需要生成的so文件名称
+                  abiFilters "armeabi", "armeabi-v7a", "x86" // 输出指定abi体系结构下的so库
+              }
+          }
+
